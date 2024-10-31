@@ -7,7 +7,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 # User-specific details
-ai_name = "Justice AI"
+ai_name = "Flivo ai"
 
 # Configure API key
 test_string = st.secrets["test_string"] 
