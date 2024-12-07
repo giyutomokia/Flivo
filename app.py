@@ -2,29 +2,29 @@ import google.generativeai as genai
 import streamlit as st
 import logging
 
-# Configure logging
+
 logging.basicConfig(level=logging.DEBUG)
 
-# User-specific details
+
 ai_name = "Flivo AI"
 
-# Define the prompt structure
+
 prompt_template = [
     "You are a helpful assistant providing answers to user queries.",
     "Make sure your answers are concise and clear.",
 ]
 
-# Hardcoded API key (for testing purposes only)
+
 api_key = "AIzaSyDgc78PnoUQUau0m4QbAUJtYIv9BKNbHhU"
 
-# Configure API key for the Generative AI model
+
 try:
     genai.configure(api_key=api_key)
 except Exception as e:
     st.error(f"Error configuring the Generative AI model with the API key: {e}")
     api_key = None
 
-# Initialize the model outside of the function
+
 try:
     if api_key:
         model = genai.GenerativeModel('gemini-pro')
@@ -34,10 +34,10 @@ except Exception as e:
     st.error(f"Error initializing the Generative Model: {e}")
     model = None
 
-# Initialize conversation history log
+
 conversation_log = []
 
-# Function to summarize AI response
+
 def summarize_response(ai_response):
     summary_prompt = f"""
     Please summarize the following response in less than 100 characters:
