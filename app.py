@@ -14,18 +14,19 @@ prompt_template = [
     "Make sure your answers are concise and clear.",
 ]
 
-# Configure API key from Streamlit secrets
+# Hardcoded API key (for testing purposes only)
+api_key = "AIzaSyDgc78PnoUQUau0m4QbAUJtYIv9BKNbHhU"
+
+# Configure API key for the Generative AI model
 try:
-    # Access the secret API key
-    test_string = st.secrets["test_string"]["api_key"]
-    genai.configure(api_key=test_string)
-except KeyError as e:
-    st.error(f"API key not found in Streamlit secrets. Please check your configuration. Error: {e}")
-    test_string = None
+    genai.configure(api_key=api_key)
+except Exception as e:
+    st.error(f"Error configuring the Generative AI model with the API key: {e}")
+    api_key = None
 
 # Initialize the model outside of the function
 try:
-    if test_string:
+    if api_key:
         model = genai.GenerativeModel('gemini-pro')
     else:
         model = None
