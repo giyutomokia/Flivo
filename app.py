@@ -46,18 +46,18 @@ def generate_prompt(Question_input):
          for log in conversation_log]
     ) if conversation_log else "No previous conversation history yet."
 
-    # Instruct the model to generate a 500-word response
-    instruction = "\nPlease provide a detailed and coherent response of approximately 500 words."
+    # Instruct the model to generate a 1000-word response
+    instruction = "\nPlease provide a detailed and coherent response of approximately 1000 words."
 
     prompt = jp.prompt + "\nNow the question is: " + Question_input + "\nAnd the previous conversation was this: " + summary + instruction
     return prompt
 
 
 def generate_ai_response(prompt):
-    """Generates a 500-word response from the AI."""
+    """Generates a 1000-word response from the AI."""
     try:
         # Assuming the model supports a max_tokens parameter, set it for longer responses.
-        response = model.generate_content(prompt, max_tokens=2048)  # Adjust `max_tokens` as needed for length.
+        response = model.generate_content(prompt, max_tokens=4096)  # Adjust `max_tokens` for 1000 words.
         return response.text
     except Exception as e:
         logging.error(f"Error generating response: {e}")
