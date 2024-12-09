@@ -93,6 +93,7 @@ def main():
         except Exception as e:
             logging.error(f"An error occurred: {e}")
             print("An error occurred. Please try again.")
+app.run(host='0.0.0.0', port=80)
 
 
 if __name__ == "__main__":
