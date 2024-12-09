@@ -45,8 +45,23 @@ def generate_prompt(Question_input):
         [f"User asked: '{log['question']}', AI responded: '{log['response_summary']}'"
          for log in conversation_log]
     ) if conversation_log else "No previous conversation history yet."
-    prompt = jp.prompt + "\n now the question is " + Question_input + "\n and the previous conversation was this " + summary
+
+    # Instruct the model to generate a 500-word response
+    instruction = "\nPlease provide a detailed and coherent response of approximately 500 words."
+
+    prompt = jp.prompt + "\nNow the question is: " + Question_input + "\nAnd the previous conversation was this: " + summary + instruction
     return prompt
+
+
+def generate_ai_response(prompt):
+    """Generates a 500-word response from the AI."""
+    try:
+        # Assuming the model supports a max_tokens parameter, set it for longer responses.
+        response = model.generate_content(prompt, max_tokens=2048)  # Adjust `max_tokens` as needed for length.
+        return response.text
+    except Exception as e:
+        logging.error(f"Error generating response: {e}")
+        return "An error occurred while generating the response."
 
 
 def main():
@@ -72,9 +87,9 @@ def main():
 
         try:
             print(f"{ai_name} is thinking...")
-            response = model.generate_content(Question)
-            print(f"{ai_name}: {response.text}")
-            save_conversation(user_input, response.text)
+            response = generate_ai_response(Question)
+            print(f"{ai_name}: {response}")
+            save_conversation(user_input, response)
         except Exception as e:
             logging.error(f"An error occurred: {e}")
             print("An error occurred. Please try again.")
